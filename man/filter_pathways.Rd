@@ -4,20 +4,17 @@
 \alias{filter_pathways}
 \title{Filter a pathway list}
 \usage{
-filter_pathways(pathways_list, edges, minSize = 5, maxSize = 200)
+filter_pathways(pathways_list, edges)
 }
 \arguments{
-\item{pathways_list}{of pathways}
+\item{pathways_list}{list of pathways}
 
 \item{edges}{Table, containing information on "reg" and "tar"}
-
-\item{minSize}{Minimum size for number of genes in a pathway (default: 5)}
-
-\item{maxSize}{Maximum size for a number of genes in a pathway (default: 200)}
 }
 \value{
 A list of filtered pathways
 }
 \description{
-This function filters a list of pathways.
+This function filters a list of pathways to include only genes in pathways
+present in networks
 }
