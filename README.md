@@ -74,15 +74,18 @@ pathways <- load_gmt(file.path(data_dir, "c2.cp.reactome.v7.1.symbols.gmt"))
 length(pathways)
 # [1] 1532
 ```
-We need to filter pathways in order to include only pathways with genes that are present in our network file. Additionally, we filter pathways based on their size, and all pathways with less than 10 and more than 150 genes are filtered out. This filtering leaves 1128 pathways.
+We need to filter pathways in order to include only pathways with genes that are present in our network file. 
 ```{r}
-pathways <- filter_pathways(pathways, edges,  minSize = 10, maxSize = 200)
+pathways <- filter_pathways(pathways, edges)
 length(pathways)
-# [1] 1128
+```
+Then, we filter pathways based on their size, and all pathways with less than 10 and more than 150 genes are filtered out. 
+```{r}
+pathways_to_use <- filter_pathways_size(pathways, minSize = 5, maxSize = 150 )
 ```
 We select the top 10 pathways for the analysis (just to reduce computational time).
 ```{r}
-pathways_to_use <- pathways[1:10]
+pathways_to_use <- pathways_to_use[1:10]
 ```
 Next, we perform PCA analysis for the 10 selected pathawys and extact the information on the variance explained by the first principal component in each pathway.
 ```{r}
