@@ -23,6 +23,7 @@ Next, we need to load in edges information, corresponding to our network data. E
 
 ```{r, echo=FALSE}
 data_dir <- ("/porcupine_data/")
+#data_dir <- ("/storage/kuijjerarea/tatiana/PORCUPINE/porcupine_data/")
 ```
 
 ```{r}
@@ -46,7 +47,7 @@ length(pathways)
 ```
 Then, we filter pathways based on their size, and all pathways with less than 10 and more than 150 genes are filtered out. 
 ```{r, include=TRUE}
-pathways_to_use <- filter_size(pathways, minSize = 5, maxSize = 150 )
+pathways_to_use <- filter_pathways_size(pathways, minSize = 5, maxSize = 150 )
 length(pathways_to_use)
 ```
 We select the top 10 pathways for the analysis (just to reduce computational time).
