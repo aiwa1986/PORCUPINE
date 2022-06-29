@@ -26,7 +26,7 @@ filter_pathways <- function(pathways_list, edges) {
 #' @export
 
 filter_pathways_size <- function(pathways_list, minSize = 5, maxSize = 150) {
-  pathways_filt <- purrr::keep(pathways_filt, function(x) length(x) >= minSize)
+  pathways_filt <- purrr::keep(pathways_list, function(x) length(x) >= minSize)
   pathways_filt <- purrr::keep(pathways_filt, function(x) length(x) <= maxSize)
   return(pathways_filt)
 }
