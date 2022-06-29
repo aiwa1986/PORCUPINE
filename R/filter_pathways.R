@@ -1,18 +1,31 @@
 #' Filter a pathway list
 #'
-#' This function filters a list of pathways.
-#' @param pathways_list of pathways
+#' This function filters a list of pathways to include only genes in pathways 
+#' present in networks
+#' @param pathways_list list of pathways
 #' @param edges Table, containing information on "reg" and "tar"
-#' @param minSize Minimum size for number of genes in a pathway (default: 5)
-#' @param maxSize Maximum size for a number of genes in a pathway (default: 200)
 #' @return A list of filtered pathways
 #' @export
 
-filter_pathways <- function(pathways_list, edges, minSize = 5, maxSize = 200) {
+filter_pathways <- function(pathways_list, edges) {
   pathways_filt <- plyr::ldply(pathways_list, data.frame) %>%
                    dplyr::rename(pathway = ".id", gene = "X..i..") %>%
                    dplyr::filter(gene %in% edges$tar) %>%
                    with(., split(gene, pathway))
+  return(pathways_filt)
+}
+
+#' Filter a pathway list based on a number of genes in a pathway
+#'
+#' This function filters a list of pathways based on specified minimum and 
+#' maximum size for number of genes in a pathway
+#' @param pathways_list list of pathways
+#' @param minSize Minimum size for number of genes in a pathway (default: 5)
+#' @param maxSize Maximum size for a number of genes in a pathway (default: 150)
+#' @return A list of filtered pathways
+#' @export
+
+filter_size <- function(pathways_list, minSize = 5, maxSize = 150) {
   pathways_filt <- purrr::keep(pathways_filt, function(x) length(x) >= minSize)
   pathways_filt <- purrr::keep(pathways_filt, function(x) length(x) <= maxSize)
   return(pathways_filt)
