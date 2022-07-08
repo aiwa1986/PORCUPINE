@@ -123,7 +123,7 @@ head(pca_res_random)
 ```
 Then to identify significant pathways we run PORCUPINE, which compares the observed PCA score for a pathway to a set of PCA scores of random gene sets of the same size as pathway. Calculates p-value and effect size.
 ```{r}
-res_porcupine <- PORCUPINE(pca_res_pathways, pca_res_random)
+res_porcupine <- porcupine(pca_res_pathways, pca_res_random)
 res_porcupine$p.adjust <- p.adjust(res_porcupine$pval, method = "fdr")
 res_porcupine
 
