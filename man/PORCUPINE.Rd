@@ -4,7 +4,7 @@
 \alias{PORCUPINE}
 \title{Determine statistical significance of PCA scores of pathways}
 \usage{
-PORCUPINE(res_pca_pathways, res_pca_rndm, test = t.test)
+PORCUPINE(res_pca_pathways, res_pca_rndm)
 }
 \arguments{
 \item{res_pca_pathways}{Output result table of pca_pathway function}
@@ -15,5 +15,6 @@ PORCUPINE(res_pca_pathways, res_pca_rndm, test = t.test)
 Table of statistics (pvalue and effect size) for each pathway
 }
 \description{
-This function compares results of PCA analyses for each pathway versus set of permutated gene sets. Calculates p-value and effect size for each pathway.
+This function compares results of PCA analyses for each pathway versus set of
+permutated gene sets. Calculates p-value and effect size for each pathway.
 }
