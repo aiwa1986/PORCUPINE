@@ -4,16 +4,16 @@
 \alias{pca_pathway}
 \title{Run PCA analysis for a list of pathways on network edges}
 \usage{
-pca_pathway(pathways_list, RegNet, edges, ncores)
+pca_pathway(pathways_list, reg_net, edges, ncores = 1)
 }
 \arguments{
 \item{pathways_list}{list of pathways}
 
-\item{RegNet}{Numeric matrix with samples in columns}
+\item{reg_net}{Numeric matrix with samples in columns}
 
 \item{edges}{Table, containing information on "reg" and "tar"}
 
-\item{ncores}{A number of cores to use}
+\item{ncores}{A number of cores to use (default: 1)}
 }
 \value{
 Dataframe with pca results for pathways in a pathway file

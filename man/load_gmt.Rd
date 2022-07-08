@@ -7,7 +7,8 @@
 load_gmt(gmt_file)
 }
 \arguments{
-\item{gmt_file}{Path to the input .gmt file. Gmt file is downloaded from http://www.gsea-msigdb.org/gsea/msigdb/collections.jsp}
+\item{gmt_file}{Path to the input .gmt file. Gmt file is downloaded
+from http://www.gsea-msigdb.org/gsea/msigdb/collections.jsp}
 }
 \value{
 A list of pathways from the .gmt file

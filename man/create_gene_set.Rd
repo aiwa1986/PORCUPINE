@@ -7,7 +7,8 @@
 create_gene_set(universe, psize, n_perm = 1000)
 }
 \arguments{
-\item{n_perm}{Number of permutations to create a random gene set (default: 1000)}
+\item{n_perm}{Number of permutations to create a random gene set
+(default: 1000)}
 
 \item{Size}{Number of genes in a gene set}
 
