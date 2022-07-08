@@ -35,7 +35,7 @@ calculate_statistics <- function(
 #' @return Table of statistics (pvalue and effect size) for each pathway
 #' @export
 
-PORCUPINE <- function(
+porcupine <- function(
         res_pca_pathways,
         res_pca_rndm) {
     pathways_size <- unique(res_pca_pathways$pathway_size)
