@@ -1,13 +1,15 @@
 #' Filter a pathway list
 #'
-#' This function filters a list of pathways to include only genes in pathways 
+#' This function filters a list of pathways to include only genes in pathways
 #' present in networks
 #' @param pathways_list list of pathways
 #' @param edges Table, containing information on "reg" and "tar"
 #' @return A list of filtered pathways
 #' @export
 
-filter_pathways <- function(pathways_list, edges) {
+filter_pathways <- function(
+    pathways_list,
+    edges) {
   pathways_filt <- plyr::ldply(pathways_list, data.frame) %>%
                    dplyr::rename(pathway = ".id", gene = "X..i..") %>%
                    dplyr::filter(gene %in% edges$tar) %>%
@@ -25,7 +27,10 @@ filter_pathways <- function(pathways_list, edges) {
 #' @return A list of filtered pathways
 #' @export
 
-filter_pathways_size <- function(pathways_list, minSize = 5, maxSize = 150) {
+filter_pathways_size <- function(
+    pathways_list,
+    minSize = 5,
+    maxSize = 150) {
   pathways_filt <- purrr::keep(pathways_list, function(x) length(x) >= minSize)
   pathways_filt <- purrr::keep(pathways_filt, function(x) length(x) <= maxSize)
   return(pathways_filt)
