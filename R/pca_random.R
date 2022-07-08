@@ -3,7 +3,8 @@
 #' This function creates random gene sets
 #' @param Size Number of genes in a gene set
 #' @param Universe Gene universe to sample random gene set from
-#' @param n_perm Number of permutations to create a random gene set (default: 1000)
+#' @param n_perm Number of permutations to create a random gene set
+#' (default: 1000)
 #' @return Random gene set
 #' @export
 
