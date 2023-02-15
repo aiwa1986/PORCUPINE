@@ -1,22 +1,28 @@
-#' Run PCA analysis for a list of pathways on network edges
+#' Run PCA analysis for a list of pathways performed on network edges
 #'
 #' This function runs PCA analysis for a list of pathways
+#' 
+#' @import parallel
+#' 
 #' @param pathways_list list of pathways
-#' @param reg_net Numeric matrix with samples in columns
+#' @param reg_net_t Numeric matrix with samples in rows
 #' @param edges Table, containing information on "reg" and "tar"
 #' @param ncores A number of cores to use (default: 1)
+#' 
 #' @return Dataframe with pca results for pathways in a pathway file
+#' 
 #' @export
 
 pca_pathway <- function(
     pathways_list,
-    reg_net,
+    reg_net_t,
     edges,
-    ncores = 1) {
+    ncores = 1,
+    scale_data = TRUE) {
     res <- parallel::mclapply(pathways_list, function(pathway) {
     idx <- which(edges$tar %in% pathway)
-    subnet <- reg_net[idx, ]
-    pca_result <- run_pca(subnet)
+    subnet <- reg_net_t[, idx]
+    pca_result <- run_pca(subnet, scale_data = scale_data)
     }, mc.cores = ncores)
     res <- as.data.frame(do.call("rbind", res))
     res$pathway <- rownames(res)

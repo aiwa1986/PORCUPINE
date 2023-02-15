@@ -1,11 +1,14 @@
 #' Creates gene set for a universe of genes
 #'
 #' This function creates random gene sets
+#' 
 #' @param Size Number of genes in a gene set
 #' @param Universe Gene universe to sample random gene set from
 #' @param n_perm Number of permutations to create a random gene set
 #' (default: 1000)
+#' 
 #' @return Random gene set
+#' 
 #' @export
 
 create_gene_set <- function(
@@ -22,24 +25,27 @@ create_gene_set <- function(
 #'
 #' This function creates random gene sets and runs PCA analysis on a set of
 #' random gene sets
-#' @param reg_net Table of network with samples in columns
+#' 
+#' @param reg_net_t Table of network with samples in rows, features in columns
 #' @param edges Table, containing information on "reg" and "tar" of reg_net
 #' @param results_pca_pathways Output result table of pca_pathway function 
 #' @param pathways_list A list of pathways
 #' @param n_perm Number of permutations to create a random gene set
 #' (default: 1000)
 #' @param ncores A number of cores to use (default: 1)
+#' 
 #' @return Dataframe with pca results for random gene sets
 #' @export
 
 
 pca_random <- function(
-        reg_net,
+        reg_net_t,
         edges,
         results_pca_pathways,
         pathways_list,
         n_perm = 1000,
-        ncores = 1) {
+        ncores = 1,
+        scale_data = TRUE) {
     pathways_size <- unique(results_pca_pathways$pathway_size)
     universe <- unique(unlist(pathways_list))
     res_pca_random <- list()
@@ -47,7 +53,8 @@ pca_random <- function(
         psize <- pathways_size[m]
         cat("Pathways with size", " ", psize, "\n")
         random_genes <- create_gene_set(universe, psize, n_perm = n_perm)
-        res_pca <- pca_pathway(random_genes, reg_net, edges, ncores)
+        res_pca <- pca_pathway(random_genes, reg_net_t, edges, ncores,
+                    scale_data = scale_data)
         res_pca_random[[m]] <- res_pca
     }
     res_pca_random_all <- as.data.frame(do.call("rbind", res_pca_random))
