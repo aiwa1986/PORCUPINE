@@ -2,16 +2,16 @@
 % Please edit documentation in R/run_pca.R
 \name{run_pca}
 \alias{run_pca}
-\title{Run PCA analysis on network data}
+\title{Run PCA analysis on the data}
 \usage{
-run_pca(data)
+run_pca(data_t, scale_data = TRUE)
 }
 \arguments{
-\item{data}{Numeric matrix with samples in columns}
+\item{data_t}{Numeric matrix with samples in rows, and features in columns}
 }
 \value{
 Dataframe with pca results
 }
 \description{
-This function runs PCA analysis
+This function perform PCA analysis on the data
 }
