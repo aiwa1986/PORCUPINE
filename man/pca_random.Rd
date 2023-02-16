@@ -6,7 +6,7 @@
 gene sets}
 \usage{
 pca_random(
-  reg_net_t,
+  reg_net,
   edges,
   results_pca_pathways,
   pathways_list,
@@ -16,7 +16,7 @@ pca_random(
 )
 }
 \arguments{
-\item{reg_net_t}{Table of network with samples in rows, features in columns}
+\item{reg_net}{Table of network with samples in columns, features in rows}
 
 \item{edges}{Table, containing information on "reg" and "tar" of reg_net}
 

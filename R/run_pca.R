@@ -4,13 +4,14 @@
 #' 
 #' @import irlba
 #' 
-#' @param data_t Numeric matrix with samples in rows, and features in columns
+#' @param data Numeric matrix with samples in columns, and features in rows
 #' 
 #' @return Dataframe with pca results
 #' 
 #' @export
 
-run_pca <- function(data_t, scale_data = TRUE) {
+run_pca <- function(data, scale_data = TRUE) {
+    data_t <- Matrix::t(data)
     # Perform scaling and centering of the data
     if (scale_data == TRUE) {
         res_pca <- irlba::prcomp_irlba(data_t, scale. = TRUE, center = TRUE)

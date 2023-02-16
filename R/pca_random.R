@@ -26,7 +26,7 @@ create_gene_set <- function(
 #' This function creates random gene sets and runs PCA analysis on a set of
 #' random gene sets
 #' 
-#' @param reg_net_t Table of network with samples in rows, features in columns
+#' @param reg_net Table of network with samples in columns, features in rows
 #' @param edges Table, containing information on "reg" and "tar" of reg_net
 #' @param results_pca_pathways Output result table of pca_pathway function 
 #' @param pathways_list A list of pathways
@@ -39,7 +39,7 @@ create_gene_set <- function(
 
 
 pca_random <- function(
-        reg_net_t,
+        reg_net,
         edges,
         results_pca_pathways,
         pathways_list,
@@ -53,7 +53,7 @@ pca_random <- function(
         psize <- pathways_size[m]
         cat("Pathways with size", " ", psize, "\n")
         random_genes <- create_gene_set(universe, psize, n_perm = n_perm)
-        res_pca <- pca_pathway(random_genes, reg_net_t, edges, ncores,
+        res_pca <- pca_pathway(random_genes, reg_net, edges, ncores,
                     scale_data = scale_data)
         res_pca_random[[m]] <- res_pca
     }
