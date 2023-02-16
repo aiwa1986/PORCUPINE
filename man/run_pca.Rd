@@ -4,10 +4,10 @@
 \alias{run_pca}
 \title{Run PCA analysis on the data}
 \usage{
-run_pca(data_t, scale_data = TRUE)
+run_pca(data, scale_data = TRUE)
 }
 \arguments{
-\item{data_t}{Numeric matrix with samples in rows, and features in columns}
+\item{data}{Numeric matrix with samples in columns, and features in rows}
 }
 \value{
 Dataframe with pca results

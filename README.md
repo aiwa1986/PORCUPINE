@@ -49,8 +49,6 @@ net[1:5, 1:5]
 dim(net)
 # [1] 11151077       20
 
-net <- t(net)
-
 ```
 Next, we need to load in edges information, corresponding to our network data. Edges table should contain columns "tar" and "reg". In our case, edge table contains 623 Tfs and 17,899 target genes.
 
