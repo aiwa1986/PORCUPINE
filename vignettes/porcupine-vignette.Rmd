@@ -83,4 +83,3 @@ Then to identify significant pathways we run PORCUPINE, which compares the obser
 res_porcupine <- porcupine(pca_res_pathways, pca_res_random)
 res_porcupine$p_adjust <- p.adjust(res_porcupine$pval, method = "fdr")
 res_porcupine
-```

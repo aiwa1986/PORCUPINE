@@ -153,3 +153,38 @@ res_porcupine
 # 10           15  1.000000e+00 1.9375777  1.000000e+00
 
 ```
+Get individual scores on PC1 and PC2 for a set of selected pathways
+```{r}
+ind_res <- get_pathway_ind_scores(pathways_to_use, net, edges,  scale_data = TRUE)
+clin_feature <- data.table("subtype" = c(rep("LMS", 10), rep("STLMS", 10)),
+                  "count" =  rnorm(n = 20, mean = 0, sd = 1))
+```
+Plot PCA results for each pathway, color individuals according to selected feature,
+first according to subtype, then according to count
+```{r}
+plot_list <- list()
+      data <- as.data.frame(ind_res[[i]])
+      plot_list[[i]] <- 
+      plot_clinical_association(data, clin_feature$subtype)
+      } 
+grid.arrange(grobs = plot_list, ncol = 2)
+```{r}
+for (i in 1:length(ind_res)) {
+      data <- as.data.frame(ind_res[[i]])
+      plot_list[[i]] <- 
+      plot_clinical_association(data, clin_feature$count)
+} 
+```
+Perform Kruskal-Wallis or Pearson correlation tests (categorical and numerical features, respectively)
+between individual scores on PC1 (or PC2) and clinical feature
+For PC1 clinical_correlation(data, 1, clinical_feature)
+For PC2 clinical_correlation(data, 2, clinical_feature)
+
+
+```{r}
+
+for (i in 1:length(ind_res)) {
+      data <- as.data.frame(ind_res[[i]])
+      print(clinical_correlation(data, 1, clin_feature$count))
+      } 
+```
