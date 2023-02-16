@@ -48,8 +48,10 @@ net[1:5, 1:5]
 
 dim(net)
 # [1] 11151077       20
-```
 
+net <- t(net)
+
+```
 Next, we need to load in edges information, corresponding to our network data. Edges table should contain columns "tar" and "reg". In our case, edge table contains 623 Tfs and 17,899 target genes.
 
 ```{r}
@@ -89,64 +91,67 @@ pathways_to_use <- pathways_to_use[1:10]
 ```
 Next, we perform PCA analysis for the 10 selected pathawys and extact the information on the variance explained by the first principal component in each pathway.
 ```{r}
-pca_res_pathways <- pca_pathway(pathways_to_use, net, edges, ncores = 10)
+pca_res_pathways <- pca_pathway(pathways_to_use, net, edges, ncores = 10, scale_data = TRUE)
 head(pca_res_pathways)
-#                                                                   pathway
-# 1 REACTOME_A_TETRASACCHARIDE_LINKER_SEQUENCE_IS_REQUIRED_FOR_GAG_SYNTHESIS
-# 2                               REACTOME_ABACAVIR_TRANSPORT_AND_METABOLISM
-# 3                          REACTOME_ABC_FAMILY_PROTEINS_MEDIATED_TRANSPORT
-# 4                                       REACTOME_ABC_TRANSPORTER_DISORDERS
-# 5                           REACTOME_ABC_TRANSPORTERS_IN_LIPID_HOMEOSTASIS
-# 6   REACTOME_ABORTIVE_ELONGATION_OF_HIV_1_TRANSCRIPT_IN_THE_ABSENCE_OF_TAT
-#      pc1 n_edges pathway_size
-# 1 34.897   16198           26
-# 2 36.113    6230           10
-# 3 29.476   60431           97
-# 4 31.932   44233           71
-# 5 32.061   11214           18
-# 6 31.695   13083           21
+
+#     pathway
+# 1  REACTOME_GLYCOGEN_BREAKDOWN_GLYCOGENOLYSIS
+# 2  REACTOME_PYRIMIDINE_CATABOLISM
+# 3  REACTOME_INHIBITION_OF_THE_PROTEOLYTIC_ACTIVITY_OF_APC_C_REQUIRED_FOR_THE_ONSET_OF_ANAPHASE_BY_MITOTIC_SPINDLE_CHECKPOINT_COMPONENTS
+# 4  REACTOME_PYRUVATE_METABOLISM_AND_CITRIC_ACID_TCA_CYCLE
+# 5  REACTOME_APOPTOTIC_CLEAVAGE_OF_CELLULAR_PROTEINS
+# 6  REACTOME_ACTIVATION_OF_THE_PRE_REPLICATIVE_COMPLEX
+      pc1 n_edges pathway_size
+# 1 22.911    8099           15
+# 2 40.107    7476           12
+# 3 31.126   12460           20
+# 4 29.538   32396           55
+# 5 24.147   21182           38
+# 6 23.830   20559           33
 ```
 Then we perform a PCA analysis based on random gene sets. In this case we create 500 random gene sets for each pathway and run PCA for each gene set.
 
 ```{r}
-pca_res_random <- pca_random(net, edges, pca_res_pathways, pathways, n_perm = 500, ncores = 20)
+pca_res_random <- pca_random(net, edges, pca_res_pathways, pathways, n_perm = 500, ncores = 10, scale_data = TRUE)
 head(pca_res_random)
 
 #   pathway    pc1 n_edges pathway_size
-# 1       1 28.071   16198           26
-# 2       2 32.989   16198           26
-# 3       3 25.577   16198           26
-# 4       4 28.452   16198           26
-# 5       5 22.744   16198           26
-# 6       6 37.569   16198           26
+# 1       1 40.891    7476           15
+# 2       2 39.796    7476           15
+# 3       3 34.702    8099           15
+# 4       4 42.187    7476           15
+# 5       5 20.051    8099           15
+# 6       6 37.628    8722           15
 
 ```
 Then to identify significant pathways we run PORCUPINE, which compares the observed PCA score for a pathway to a set of PCA scores of random gene sets of the same size as pathway. Calculates p-value and effect size.
 ```{r}
+
 res_porcupine <- porcupine(pca_res_pathways, pca_res_random)
 res_porcupine$p.adjust <- p.adjust(res_porcupine$pval, method = "fdr")
 res_porcupine
+#   pathway
+# 1  REACTOME_BILE_ACID_AND_BILE_SALT_METABOLISM
+# 2  REACTOME_BASE_EXCISION_REPAIR
+# 3  REACTOME_PROCESSING_OF_INTRONLESS_PRE_MRNAS
+# 4  REACTOME_ACTIVATION_OF_THE_PRE_REPLICATIVE_COMPLEX
+# 5  REACTOME_APOPTOTIC_CLEAVAGE_OF_CELLULAR_PROTEINS
+# 6  REACTOME_PYRUVATE_METABOLISM_AND_CITRIC_ACID_TCA_CYCLE
+# 7  REACTOME_INHIBITION_OF_THE_PROTEOLYTIC_ACTIVITY_OF_APC_C_REQUIRED_FOR_THE_ONSET_OF_ANAPHASE_BY_MITOTIC_SPINDLE_CHECKPOINT_COMPONENTS
+# 8  REACTOME_PYRIMIDINE_CATABOLISM
+# 9  REACTOME_GAP_JUNCTION_DEGRADATION
+# 10 REACTOME_GLYCOGEN_BREAKDOWN_GLYCOGENOLYSIS
 
-#                                                                    pathway
-# 1                    REACTOME_ACTIVATED_NTRK2_SIGNALS_THROUGH_FRS2_AND_FRS3
-# 2                     REACTOME_ACETYLCHOLINE_NEUROTRANSMITTER_RELEASE_CYCLE
-# 3                      REACTOME_ACETYLCHOLINE_BINDING_AND_DOWNSTREAM_EVENTS
-# 4    REACTOME_ABORTIVE_ELONGATION_OF_HIV_1_TRANSCRIPT_IN_THE_ABSENCE_OF_TAT
-# 5                            REACTOME_ABC_TRANSPORTERS_IN_LIPID_HOMEOSTASIS
-# 6                                        REACTOME_ABC_TRANSPORTER_DISORDERS
-# 7                           REACTOME_ABC_FAMILY_PROTEINS_MEDIATED_TRANSPORT
-# 8                                REACTOME_ABACAVIR_TRANSPORT_AND_METABOLISM
-# 9  REACTOME_A_TETRASACCHARIDE_LINKER_SEQUENCE_IS_REQUIRED_FOR_GAG_SYNTHESIS
-# 10                REACTOME_ACTIVATED_NOTCH1_TRANSMITS_SIGNAL_TO_THE_NUCLEUS
-   pathway_size         pval         es     p.adjust
-# 1            11 1.000000e+00 1.22831105 1.000000e+00
-# 2            15 4.860446e-20 0.42427094 1.215112e-19
-# 3            12 1.000000e+00 1.13698534 1.000000e+00
-# 4            21 8.951552e-02 0.06017867 1.491925e-01
-# 5            18 1.623396e-01 0.04408903 2.319137e-01
-# 6            71 2.429933e-39 0.63868153 1.214967e-38
-# 7            97 1.000000e+00 0.48791384 1.000000e+00
-# 8            10 8.087782e-23 0.45858385 2.695927e-22
-# 9            26 4.592328e-70 0.93116198 4.592328e-69
-# 10           26 1.478399e-02 0.09758639 2.956799e-02
+# pathway_size          pval        es      p.adjust
+# 1            43  9.999989e-01 0.2143374  1.000000e+00
+# 2            91  4.780368e-05 0.1759077  1.593456e-04
+# 3            19  1.000000e+00 1.1084317  1.000000e+00
+# 4            33  1.000000e+00 2.0303499  1.000000e+00
+# 5            38  1.000000e+00 1.9390723  1.000000e+00
+# 6            55  1.000000e+00 0.3111659  1.000000e+00
+# 7            20  9.994867e-01 0.1476974  1.000000e+00
+# 8            12  4.812550e-97 1.1803796  2.406275e-96
+# 9            12 2.044926e-259 3.1134399 2.044926e-258
+# 10           15  1.000000e+00 1.9375777  1.000000e+00
+
 ```
