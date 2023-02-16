@@ -4,7 +4,7 @@
 #' 
 #' @param data Numeric matrix with samples in columns, and features in rows
 #' 
-#' @return individual scores for PC1 to PC10
+#' @return individual scores for PC1 and PC2
 #' 
 #' @export
 
@@ -75,10 +75,10 @@ plot_clinical_association <- function(scores, clin_col) {
 clinical_correlation <- function(individual_scores, component, clin_col) {
     if (is.numeric(clin_col)) {
     # Perform correlation test if the column is numeric
-    pval <- cor.test(individual_scores[,component], clin_col)$"p.value"
+    pval <- cor.test(individual_scores[, component], clin_col)$"p.value"
         } else {
     # Perform Kruskal-Wallis test if the column is not numeric
-    pval <- kruskal.test(individual_scores[,component] ~ clin_col)$"p.value"
+    pval <- kruskal.test(individual_scores[, component] ~ clin_col)$"p.value"
     }
     return(pval)
     }

@@ -169,16 +169,19 @@ plot_list <- list()
       } 
 grid.arrange(grobs = plot_list, ncol = 2)
 ```{r}
+plot_list <- list()
 for (i in 1:length(ind_res)) {
       data <- as.data.frame(ind_res[[i]])
       plot_list[[i]] <- 
       plot_clinical_association(data, clin_feature$count)
 } 
+grid.arrange(grobs = plot_list, ncol = 2)
 ```
 Perform Kruskal-Wallis or Pearson correlation tests (categorical and numerical features, respectively)
-between individual scores on PC1 (or PC2) and clinical feature
-For PC1 clinical_correlation(data, 1, clinical_feature)
-For PC2 clinical_correlation(data, 2, clinical_feature)
+between individual scores on PC1 (or PC2) and clinical feature.
+
+For PC1: clinical_correlation(data, 1, clinical_feature)
+For PC2: clinical_correlation(data, 2, clinical_feature)
 
 
 ```{r}
@@ -187,4 +190,10 @@ for (i in 1:length(ind_res)) {
       data <- as.data.frame(ind_res[[i]])
       print(clinical_correlation(data, 1, clin_feature$count))
       } 
+
+for (i in 1:length(ind_res)) {
+      data <- as.data.frame(ind_res[[i]])
+      print(clinical_correlation(data, 2, clin_feature$count))
+      } 
+
 ```
