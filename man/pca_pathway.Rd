@@ -4,12 +4,12 @@
 \alias{pca_pathway}
 \title{Run PCA analysis for a list of pathways performed on network edges}
 \usage{
-pca_pathway(pathways_list, reg_net_t, edges, ncores = 1, scale_data = TRUE)
+pca_pathway(pathways_list, reg_net, edges, ncores = 1, scale_data = TRUE)
 }
 \arguments{
 \item{pathways_list}{list of pathways}
 
-\item{reg_net_t}{Numeric matrix with samples in rows}
+\item{reg_net}{Numeric matrix with samples in columns, features in rows}
 
 \item{edges}{Table, containing information on "reg" and "tar"}
 
