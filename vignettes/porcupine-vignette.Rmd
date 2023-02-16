@@ -9,28 +9,45 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-**PORCUPINE**  (PCA  to Obtain Regulatory Contributions Using Pathway-based Interpretation  of  Network  Estimates). 
+# PORCUPINE
+**P**rincipal Components Analysis to **O**btain **R**egulatory **C**ontributions **U**sing **P**athway-based Interpretation of **N**etwork **E**stimates is an R package to identify biological pathway which drive inter-tumour heterogeneity in a population of gene regulatory networks. It is a Principal Components Analysis (PCA)-based approach that can be used to determine whether a specific set of variables—for example a set of genes in a specific pathway—have coordinated variability in their regulation.
 
-PORCUPINE uses as input individual patient regulatory networks, represented by estimated regulatory interactions between transcription factors and their target genes, 
-and a list of genes assigned to biological pathways in order to identify key pathways that drive heterogeneity among individuals. It determines whether a specific set
-of variables—for example a set of genes in a specific pathway—have coordinated variability in their regulation.
-Here we provide an example how we analysed heterogeneity among patient-specific gene regulatory networks in Leiomyosarcomas (LMS). Networks were obtained with PANDA 
-and LIONESS algorithms. Our example dataset contains data for 20 LMS patient-specific gene regulatory networks.
-To run PORCUPINE analysis one needs matrix with networks (samples in columns), edges information (table containing "reg" and "tar" information) and a .gmt pathway file. 
+## Method
+PORCUPINE uses as input individual patient networks, for example networks modeled using PANDA and LIONESS, as well as a .gmt file that includes biological pathways and the genes belonging to them. For each pathway, it extracts all edges connected to the genes belonging to that pathway and scales each edge across individuals. It then performs a PCA analysis on these edge weights, as well as on a null background that is based on random pathways. To identify significant pathways, PORCUPINE applies a one-tailed t-test and calculates the effect size (ES). 
+Here we provide example how we analysed heterogeneity among single gene regulatory sample networks in Leiomyosarcomas (LMS). Networks were obtained with PANDA and LIONESS algorithms. Our example dataset contains data for 20 LMS patient specific gene regulatory networks. 
 
-First, we load the network data. Network file is quite big and it takes time to read it in. Our example contains 20 networks, represented by 11,151,077 edges.
-Next, we need to load in edges information, corresponding to our network data. Edges table should contain columns "tar" and "reg". In our case, edge table contains 623 Tfs and 17,899 target genes.
+## Usage
+```{r}
+library(remotes)
+install_github('kuijjerlab/PORCUPINE')
+library("PORCUPINE")
+```
+For this analysis, we need to load the following packages:
+```{r}
+require("data.table")
+require("fgsea")
+require("dplyr")
+require("plyr")
+require("purrr")
+require("stats")
+require("parallel")
+require("lsr")
+set.seed(1234)
+```
 
 ```{r, echo=FALSE}
-data_dir <- ("/porcupine_data/")
 #data_dir <- ("/storage/kuijjerarea/tatiana/PORCUPINE/porcupine_data/")
 ```
 
 ```{r}
-require("PORCUPINE")
-
 net <- fread(file.path(data_dir, "20LMS_nets.txt"))
 net[1:5, 1:5]
+net <- t(net)
+```
+
+Next, we need to load in edges information, corresponding to our network data. Edges table should contain columns "tar" and "reg". In our case, edge table contains 623 Tfs and 17,899 target genes.
+
+```{r}
 edges <- fread(file.path(data_dir, "edges.txt"))
 head(edges)
 ```
@@ -40,31 +57,25 @@ Then, we need to load in pathway file (.gmt file). Gmt files can be downloaded f
 pathways <- load_gmt(file.path(data_dir, "c2.cp.reactome.v7.1.symbols.gmt"))
 length(pathways)
 ```
-We need to filter pathways in order to include only pathways with genes that are present in our network file. 
-```{r, include=TRUE}
-pathways <- filter_pathways(pathways, edges)
-length(pathways)
-```
 Then, we filter pathways based on their size, and all pathways with less than 10 and more than 150 genes are filtered out. 
-```{r, include=TRUE}
-pathways_to_use <- filter_pathways_size(pathways, minSize = 5, maxSize = 150 )
-length(pathways_to_use)
+
+```{r}
+pathways_to_use <- filter_pathways_size(pathways, minSize = 5, maxSize = 150)
 ```
 We select the top 10 pathways for the analysis (just to reduce computational time).
-
-```{r, include=TRUE}
+```{r}
 pathways_to_use <- pathways_to_use[1:10]
 ```
 Next, we perform PCA analysis for the 10 selected pathawys and extact the information on the variance explained by the first principal component in each pathway.
 
 ```{r, include=TRUE}
-pca_res_pathways <- pca_pathway(pathways_to_use, net, edges, ncores = 10)
+pca_res_pathways <- pca_pathway(pathways_to_use, net, edges, ncores = 10, scale_data = TRUE)
 head(pca_res_pathways)
 ```
 Then we perform a PCA analysis based on random gene sets. In this case we create 500 random gene sets for each pathway and run PCA for each gene set.
 
 ```{r, include=TRUE}
-pca_res_random <- pca_random(net, edges, pca_res_pathways, pathways, n_perm = 500, ncores = 20)
+pca_res_random <- pca_random(net, edges, pca_res_pathways, pathways, n_perm = 500, ncores = 10, scale_data = TRUE)
 head(pca_res_random)
 ```
 Then to identify significant pathways we run PORCUPINE, which compares the observed PCA score for a pathway to a set of PCA scores of random gene sets of the same size as pathway. Calculates p-value and effect size.
