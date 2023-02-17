@@ -208,7 +208,7 @@ plot_list <- lapply(seq_along(plot_list), function(i) {
 })
 
 grid.arrange(grobs = plot_list, ncol = 2)
-
+<embed src="/images/subtype.pdf" type="application/pdf" width="50%" height="300px" />
 ```
 Similar plot but for clinical feature "count"
 
@@ -224,7 +224,7 @@ plot_list <- lapply(seq_along(plot_list), function(i) {
     draw_label(titles_list[[i]], fontface = "bold", x = 0.5, y = 0.95)
 })
 grid.arrange(grobs = plot_list, ncol = 2)
-
+<embed src="/images/count.pdf" type="application/pdf" width="50%" height="300px" />
 ```
 Perform Kruskal-Wallis or Pearson correlation tests (categorical and numerical features, respectively) between individual scores on PC1 (or PC2) and clinical feature.
 Output is p-value for each pathway
