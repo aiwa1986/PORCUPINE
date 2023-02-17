@@ -59,7 +59,7 @@ get_pathway_ind_scores <- function(pathways_list,
 
 plot_clinical_association <- function(scores, clin_col) {
     ggplot(scores, aes(scores[,1], scores[,2], col = clin_col)) +
-    geom_point(size = 2.5) + xlab("PC1") + ylab("PC2") +  theme_bw()
+    geom_point(size = 2.5) + xlab("PC1") + ylab("PC2") +  theme_bw() 
 }
 
 #' Correlation test or Kruskal Wallis test (numeric or categorical feature)
