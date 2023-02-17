@@ -192,7 +192,6 @@ clin_feature <- data.table("subtype" = c(rep("LMS", 10), rep("STLMS", 10)),
 Plot PCA results for each pathway, color individuals according to selected feature,
 first according to subtype, then according to count
 ```{r}
-<!-- image_directory <- "/div/pythagoras/u2/tatianub/PORCUPINE/porcupine/images/" -->
 titles <- gsub("REACTOME_", "", names(ind_res))
 titles <- substr(titles, start = 1, stop = 35)
 titles_list <- as.list(titles)
@@ -207,10 +206,9 @@ plot_list <- lapply(seq_along(plot_list), function(i) {
   ggdraw(plot_list[[i]]) +
     draw_label(titles_list[[i]], fontface = "bold", x = 0.5, y = 0.95)
 })
-<!-- pdf(file.path(image_directory, "subtype.pdf"), width=10, height=10) -->
+
 grid.arrange(grobs = plot_list, ncol = 2)
-<!-- dev.off() -->
-![](images/subtype.pdf)
+
 ```
 Similar plot but for clinical feature "count"
 
@@ -225,10 +223,7 @@ plot_list <- lapply(seq_along(plot_list), function(i) {
   ggdraw(plot_list[[i]]) +
     draw_label(titles_list[[i]], fontface = "bold", x = 0.5, y = 0.95)
 })
-<!-- pdf(file.path(image_directory, "count.pdf"), width=10, height=10) -->
 grid.arrange(grobs = plot_list, ncol = 2)
-<!-- dev.off() -->
-![](images/count.pdf)
 
 ```
 Perform Kruskal-Wallis or Pearson correlation tests (categorical and numerical features, respectively) between individual scores on PC1 (or PC2) and clinical feature.
