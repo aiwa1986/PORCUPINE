@@ -6,10 +6,10 @@
 #' from http://www.gsea-msigdb.org/gsea/msigdb/collections.jsp
 #' 
 #' @return A list of pathways from the .gmt file
-#' 
 #' @export
+#' 
 
 load_gmt <- function(gmt_file) {
-  pathways_list <- fgsea::gmtPathways(gmt_file)
-  return(pathways_list)
+    pathways_list <- fgsea::gmtPathways(gmt_file)
+    return(pathways_list)
 }
