@@ -4,8 +4,6 @@
 #' This function fertemines and visualizes the optimal number of clusters using
 #' kmeans clustering
 #' 
-#' @import factoextra
-#' 
 #' @param pathway_of_interest List with genes in a pathway of interest
 #' @param reg_net Numeric matrix with samples in columns, features in rows
 #' @param edges Data frame containing information on "reg" and "tar"

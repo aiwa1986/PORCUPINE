@@ -1,8 +1,6 @@
 #' Run PCA analysis on the data
 #'
 #' This function perform PCA analysis on the data
-#'
-#' @import irlba
 #' 
 #' @param data Numeric matrix with samples in columns, and features in rows
 #' @param scale_data Logical, whether to scale the data (TRUE) or not (FALSE),
