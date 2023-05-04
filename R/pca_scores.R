@@ -49,11 +49,11 @@ get_pathway_ind_scores <- function(pathways_list,
                         scale_data = TRUE,
                         center_data = TRUE) {
     res <- lapply(pathways_list, function(pathway) {
-    idx <- which(edges$tar %in% pathway)
-    subnet <- reg_net[idx, ]
-    individual_scores <- get_ind_scores(subnet,
-                        scale_data = scale_data,
-                        center_data = center_data)
+        idx <- which(edges$tar %in% pathway)
+        subnet <- reg_net[idx, ]
+        individual_scores <- get_ind_scores(subnet,
+                            scale_data = scale_data,
+                            center_data = center_data)
     })
     names(res) <- names(pathways_list)
     return(res)
@@ -79,7 +79,8 @@ get_features_scores <- function(data,
                     scale_data = TRUE,
                     center_data = TRUE) {
     data_t <- Matrix::t(data)
-    res_pca <- irlba::prcomp_irlba(data_t, scale. = scale_data,
+    res_pca <- irlba::prcomp_irlba(data_t,
+                scale. = scale_data,
                 center = center_data)
     edges_scores <- res_pca$rotation
     edges_scores <- as.data.frame(edges_scores[, 1:2])
@@ -136,7 +137,7 @@ get_pathway_features_scores <- function(pathways_list,
 #' @param individual_scores individual heterogeneity scores on PC1 and PC2 
 #' @param clin_feature clinical feature for individuals (e.g. age)
 #' 
-#' @return PCA plot with individuals colored according to clinical feature
+#' @return PCA plot 
 #' @export
 #' 
 
