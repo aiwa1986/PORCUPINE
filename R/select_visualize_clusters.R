@@ -13,7 +13,7 @@
 #' Default is TRUE.
 #' @param center_data Whether to scale the data (TRUE) or not (FALSE),
 #' Default is TRUE.
-#' @param kmax Integer specifying the maximum nuber of clusters to consider
+#' @param k_max Integer specifying the maximum nuber of clusters to consider
 #' 
 #' @return ggplot object
 #' @export
@@ -23,14 +23,14 @@ select_number_clusters <- function(pathway_of_interest,
                     reg_net,
                     edges,
                     scale_data = TRUE,
-                    center_data = TRUE
+                    center_data = TRUE,
                     kmax = 8) {
     results <- get_pathway_ind_scores(pathway_of_interest,
                     reg_net,
                     edges,
                     scale_data = scale_data,
                     center_data = center_data)
-    g <- factoextra::fviz_nbclust(results,
+    g <- factoextra::fviz_nbclust(results[[1]],
                     FUNcluster = kmeans,
                     k.max = kmax)
     plot(g)
@@ -60,21 +60,16 @@ visualize_clusters <- function(pathway_of_interest,
                     scale_data = TRUE,
                     center_data = TRUE,
                     number_of_clusters) {
-    if (!is.integer(number_of_clusters) || number_of_clusters <= 0 ||
-        number_of_clusters >= ncol(reg_net)) {
-        stop("number_of_clusters must be a positive integer
-        less than the number of patients.")
-    }
     results <- get_pathway_ind_scores(pathway_of_interest,
                     reg_net,
                     edges,
                     scale_data = scale_data,
                     center_data = center_data)
-    final_clusters <- kmeans(results, number_of_clusters, nstart = 25)
+    final_clusters <- kmeans(results[[1]], number_of_clusters, nstart = 25)
     g <- factoextra::fviz_cluster(final_clusters,
-                    data = results,
+                    data = results[[1]],
                     geom = "point",
                     ggtheme = theme_bw(),
                     ellipse = TRUE)
-    plot(g)
- }
+    return(list(plot = g, clusters = final_clusters))
+}
