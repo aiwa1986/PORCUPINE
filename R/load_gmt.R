@@ -2,6 +2,8 @@
 #'
 #' This function loads a .gmt file.
 #' 
+#' @import fgsea
+#' 
 #' @param gmt_file Path to the input .gmt file. Gmt file is downloaded
 #' from http://www.gsea-msigdb.org/gsea/msigdb/collections.jsp
 #' 
