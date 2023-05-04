@@ -177,7 +177,8 @@ pathways[373]
 select_number_clusters(pathways[373],
                   net,
                   edges)
-![number_of_clusters](/images/number_clusters.png)
+```
+![number_of_clusters](./images/number_clusters.png)
 
 ```
 The optimal number of clusters is 2. To visualize clusters:
