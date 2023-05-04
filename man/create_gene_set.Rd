@@ -2,17 +2,17 @@
 % Please edit documentation in R/pca_random.R
 \name{create_gene_set}
 \alias{create_gene_set}
-\title{Creates gene set for a universe of genes}
+\title{Creates gene set from a universe of genes}
 \usage{
 create_gene_set(universe, psize, n_perm = 1000)
 }
 \arguments{
+\item{universe}{Gene universe to sample random gene set from}
+
+\item{psize}{Number of genes in a gene set}
+
 \item{n_perm}{Number of permutations to create a random gene set
 (default: 1000)}
-
-\item{Size}{Number of genes in a gene set}
-
-\item{Universe}{Gene universe to sample random gene set from}
 }
 \value{
 Random gene set

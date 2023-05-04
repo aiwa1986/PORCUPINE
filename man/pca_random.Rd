@@ -2,8 +2,8 @@
 % Please edit documentation in R/pca_random.R
 \name{pca_random}
 \alias{pca_random}
-\title{Creates random gene sets and runs PCA analysis on network for a set of random
-gene sets}
+\title{Creates random gene sets and runs PCA analysis on networks for a set of
+random gene sets}
 \usage{
 pca_random(
   reg_net,
@@ -12,7 +12,8 @@ pca_random(
   pathways_list,
   n_perm = 1000,
   ncores = 1,
-  scale_data = TRUE
+  scale_data = TRUE,
+  center_data = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,12 @@ pca_random(
 (default: 1000)}
 
 \item{ncores}{A number of cores to use (default: 1)}
+
+\item{scale_data}{Logical, whether to scale the data (TRUE) or not (FALSE),
+Default is TRUE.}
+
+\item{center_data}{Logical, whether to center the data (TRUE) or not (FALSE),
+Default is TRUE.}
 }
 \value{
 Dataframe with pca results for random gene sets

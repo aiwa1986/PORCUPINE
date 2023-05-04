@@ -4,10 +4,16 @@
 \alias{run_pca}
 \title{Run PCA analysis on the data}
 \usage{
-run_pca(data, scale_data = TRUE)
+run_pca(data, scale_data = TRUE, center_data = TRUE)
 }
 \arguments{
 \item{data}{Numeric matrix with samples in columns, and features in rows}
+
+\item{scale_data}{Logical, whether to scale the data (TRUE) or not (FALSE),
+Default is TRUE.}
+
+\item{center_data}{Logical, whether to center the data (TRUE) or not (FALSE),
+Default is TRUE.}
 }
 \value{
 Dataframe with pca results

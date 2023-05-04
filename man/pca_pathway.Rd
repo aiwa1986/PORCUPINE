@@ -4,7 +4,14 @@
 \alias{pca_pathway}
 \title{Run PCA analysis for a list of pathways performed on network edges}
 \usage{
-pca_pathway(pathways_list, reg_net, edges, ncores = 1, scale_data = TRUE)
+pca_pathway(
+  pathways_list,
+  reg_net,
+  edges,
+  ncores = 1,
+  scale_data = TRUE,
+  center_data = TRUE
+)
 }
 \arguments{
 \item{pathways_list}{list of pathways}
@@ -14,6 +21,12 @@ pca_pathway(pathways_list, reg_net, edges, ncores = 1, scale_data = TRUE)
 \item{edges}{Table, containing information on "reg" and "tar"}
 
 \item{ncores}{A number of cores to use (default: 1)}
+
+\item{scale_data}{Logical, whether to scale the data (TRUE) or not (FALSE),
+Default is TRUE.}
+
+\item{center_data}{Logical, whether to center the data (TRUE) or not (FALSE),
+Default is TRUE.}
 }
 \value{
 Dataframe with pca results for pathways in a pathway file
