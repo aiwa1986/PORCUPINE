@@ -2,10 +2,6 @@
 #' 
 #' This function extracts patient heterogeneity scores on the fist
 #' two principal components.
-#'
-#' @import Matrix
-#' @import irlba
-#' @import factoextra
 #' 
 #' @param data Numeric matrix with samples in columns, and features in rows
 #' @param scale_data Whether to scale the data (TRUE) or not (FALSE),

@@ -2,8 +2,6 @@
 #'
 #' This function runs PCA analysis for a list of pathways
 #' 
-#' @import parallel
-#' 
 #' @param pathways_list list of pathways 
 #' @param reg_net Numeric matrix with samples in columns, features in rows
 #' @param edges Table, containing information on "reg" and "tar"
