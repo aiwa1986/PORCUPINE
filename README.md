@@ -177,6 +177,7 @@ pathways[373]
 select_number_clusters(pathways[373],
                   net,
                   edges)
+![alt text](https://github.com/aiwa1986/PORCUPINE/blob/master/images/number_clusters.png)
 
 ```
 The optimal number of clusters is 2. To visualize clusters:
