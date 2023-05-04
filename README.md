@@ -186,6 +186,7 @@ clusters <- visualize_clusters(pathways[598],
                     net,
                     edges,
                     number_of_clusters = 2)
+groups <- clusters$cluster$cluster
 
 ```
 
