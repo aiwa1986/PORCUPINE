@@ -3,6 +3,9 @@
 #' This function filters a list of pathways to include only genes in pathways
 #' present in networks
 #' 
+#' @import plyr
+#' @import dplyr
+#' 
 #' @param pathways_list list of pathways
 #' @param edges Table, containing information on "reg" and "tar"
 #' 
@@ -23,6 +26,8 @@ filter_pathways <- function(pathways_list,
 #'
 #' This function filters a list of pathways based on specified minimum and 
 #' maximum size for number of genes in a pathway
+#' 
+#' @import purrr
 #' 
 #' @param pathways_list list of pathways
 #' @param minSize Minimum size for number of genes in a pathway (default: 5)
