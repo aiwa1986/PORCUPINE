@@ -4,8 +4,6 @@
 #' random gene sets of the same size as pathway. Calculates p-value
 #' and effect size.
 #' 
-#' @import lsr
-#' 
 #' @param res_pca_pathway Result table of pca_pathway function for one pathway
 #' @param res_pca_random_subset Result table of pca_random function for
 #' one pathway.

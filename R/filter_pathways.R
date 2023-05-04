@@ -3,9 +3,6 @@
 #' This function filters a list of pathways to include only genes in pathways
 #' present in networks
 #' 
-#' @import plyr
-#' @import dplyr
-#' 
 #' @param pathways_list list of pathways
 #' @param edges Table, containing information on "reg" and "tar"
 #' 
