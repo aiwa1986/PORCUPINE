@@ -177,13 +177,13 @@ pathways[373]
 select_number_clusters(pathways[373],
                   net,
                   edges)
-![alt text](https://github.com/aiwa1986/PORCUPINE/blob/master/images/number_clusters.png)
+![number_of_clusters](/images/number_clusters.png)
 
 ```
 The optimal number of clusters is 2. To visualize clusters:
 ```{r}
 
-clusters <- visualize_clusters(pathways[598],
+clusters <- visualize_clusters(pathways[373],
                     net,
                     edges,
                     number_of_clusters = 2)
