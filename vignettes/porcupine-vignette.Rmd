@@ -208,7 +208,7 @@ select_number_clusters(pathways[373],
                   edges)
 dev.off()
 ```
-<img src="./images/number_clusters.png" alt="number of clusters" width="200" height="200">
+<img src="./images/number_clusters.png" alt="number of clusters" width="400" height="400">
 
 ```
 The optimal number of clusters is 2. To visualize clusters:
@@ -223,13 +223,5 @@ print(clusters)
 dev.off()
 groups <- clusters$cluster$cluster
 ```
-<img src="./images/clusters.png" alt="clusters" width="200" height="200">
-
+<img src="./images/clusters.png" alt="clusters" width="400" height="400">
 ```
-
-
-
-
-
-
-
