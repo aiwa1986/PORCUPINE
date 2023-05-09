@@ -3,7 +3,7 @@
 
 ## Method
 PORCUPINE uses as input individual patient networks, for example networks modeled using PANDA and LIONESS, as well as a .gmt file that includes biological pathways and the genes belonging to them. For each pathway, it extracts all edges connected to the genes belonging to that pathway and scales each edge across individuals. It then performs a PCA analysis on these edge weights, as well as on a null background that is based on random pathways. To identify significant pathways, PORCUPINE applies a one-tailed t-test and calculates the effect size (ES). 
-Here we provide example how we analysed heterogeneity among single gene regulatory sample networks in Leiomyosarcomas (LMS). Networks were obtained with PANDA and LIONESS algorithms. Our example dataset contains data for 20 LMS patient specific gene regulatory networks. 
+Here we provide example how we analysed heterogeneity among single gene regulatory sample networks in Leiomyosarcomas (LMS). Networks were obtained with PANDA and LIONESS algorithms. Our  dataset contains data for 80 TCGA LMS patient-specific gene regulatory networks. 
 
 ## Usage
 
@@ -33,28 +33,45 @@ In this example, we have patient-specific gene regulatory networks for 80 TCGA l
 The first three columns in the data provide information on the regulators (TFs) and target genes. 
 
 ```{r}
-net <- readRDS(file.path(data_dir, "80_tcga_lms_net.Rdata"))
-dim(net)
+load(file.path(data_dir, "80_tcga_lms_net.RData"), net <- new.env())
+net <- net[["net"]]
 net[1:5, 1:5]
 
-#    reg  tar prior 0E244FE2-7C17-4642-A51F-2CCA796D9C70
-# 1 AIRE A1BG     0                                 0.76
-# 2 ALX1 A1BG     0                                 0.94
-# 3 ALX3 A1BG     0                                 1.09
-# 4 ALX4 A1BG     0                                 1.13
-# 5   AR A1BG     0                                -0.71
-# #   75435ED8-93E8-45FB-8480-98D8EB2EF8CB
-# 1                                 0.10
-# 2                                 1.43
-# 3                                 2.78
-# 4                                 2.60
-# 5                                -1.42
+#   0E244FE2-7C17-4642-A51F-2CCA796D9C70 75435ED8-93E8-45FB-8480-98D8EB2EF8CB
+# 1                                 0.76                                 0.10
+# 2                                 0.94                                 1.43
+# 3                                 1.09                                 2.78
+# 4                                 1.13                                 2.60
+# 5                                -0.71                                -1.42
+#   B6D11678-15A9-4F43-A0A2-225067DCAF1C B7F5A41E-9559-4329-81F5-1B88A74730B7
+# 1                                -1.27                                 0.01
+# 2                                 0.30                                 0.91
+# 3                                 1.01                                 2.13
+# 4                                 1.66                                 1.71
+# 5                                 0.02                                 0.27
+#   04823F53-A12D-4852-8F34-77B9DCBB7DF0
+# 1                                -7.18
+# 2                                -5.69
+# 3                                -6.09
+# 4                                -6.04
+# 5                                 5.31
+
 ```
-We will extract the information on regulators and targets into separate dataframe.
+Now we load in the edges information. This includes three columns: reg (the transcription factor's gene symbol),
+tar (Ensembl ID), prior (whether an edge is prior (1) or not (0)).
 
 ```{r}
-edges <- net[, c(1:3)]
-net <- net[, -c(1:3)]
+load(file.path(data_dir, "edges.RData"), edges <- new.env())
+edges <- edges[["edges"]]
+head(edges)
+#     reg  tar prior
+# 1  AIRE A1BG     0
+# 2  ALX1 A1BG     0
+# 3  ALX3 A1BG     0
+# 4  ALX4 A1BG     0
+# 5    AR A1BG     0
+# 6 ARID2 A1BG     0
+
 length(unique(edges$reg))
 # [1] 623
 length(unique(edges$tar))
@@ -174,24 +191,30 @@ pathways[373]
 #   [8] "PPP2CA"  "TFDP2"   "ORC2"    "ORC4"    "MCM8"    "CCNB1"   "ORC3"   
 #  [15] "PPP2R1B" "RB1"     "PRIM2"   "ORC5"    "CDK1"    "PRIM1"   "TFDP1" 
 ```{r}
+png("number_clusters.png", width = 400, height = 400)
 select_number_clusters(pathways[373],
                   net,
                   edges)
+dev.off()
 ```
-![number_of_clusters](./images/number_clusters.png)
+<img src="./images/number_clusters.png" alt="number of clusters" width="200" height="200">
 
 ```
 The optimal number of clusters is 2. To visualize clusters:
 ```{r}
-
+png("clusters.png", width = 400, height = 400)
 clusters <- visualize_clusters(pathways[373],
                     net,
                     edges,
                     number_of_clusters = 2)
+
+print(clusters)
+dev.off()
 groups <- clusters$cluster$cluster
+```
+<img src="./images/clusters.png" alt="clusters" width="200" height="200">
 
 ```
-
 
 
 
