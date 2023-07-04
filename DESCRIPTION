@@ -1,5 +1,5 @@
 Package: PORCUPINE
-Title: Approach to study inter-tumour gene regulatory heterogeneity in a population of gene regulatory networks.
+Title: Approach to study inter-patient gene regulatory heterogeneity in a population of sample-specific gene regulatory networks.
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Tatiana",
@@ -24,6 +24,11 @@ Imports:
     dplyr,
     plyr,
     purrr,
+    irlba,
     stats,
     parallel,
-    lsr 
+    lsr,
+    gridExtra,
+    factoextra
+    
+
